@@ -1,0 +1,247 @@
+<section class="hero-section d-flex flex-column flex-md-row align-items-center justify-content-between px-5 py-5">
+  <div class="hero-left mb-5 mb-md-0">
+    <h1 class="fw-light">Hello <span class="text-danger">.</span></h1>
+
+    <div class="d-flex align-items-center gap-3">
+      <div class="red-line-hor"></div>
+      <h1 class="fw-bold display-5 mb-0">I'm Gaurav</h1>
+    </div>
+
+    <h2 class="fw-bold fs-2">Software Developer</h2>
+
+<div class="mt-4 d-flex gap-3 flex-wrap">
+  <a href="#" class="btn btn-danger">Got a project?</a>
+  <%= link_to "My resume", resume_path(1), class: "btn btn-outline-primary" %>
+</div>
+
+  </div>
+
+  <div class="hero-right position-relative text-center">
+    <div class="hero-bg-circle"></div>
+    <%= image_tag "my_image.jpeg", alt: "Gaurav", class: "hero-image" %>
+  </div>
+</section>
+
+<!-- Skills Bar -->
+<div class="skills-bar fs-6 border-top border-secondary border-opacity-25">
+  <span>HTML5</span>
+  <span>CSS</span>
+  <span>JavaScript</span>
+  <span>Ruby</span>
+  <span>Ruby On Rails</span>
+  <span>Git</span>
+  <span>PostgreSQL</span>
+  <span>Docker</span>
+</div>
+
+<!-- About Section -->
+<section class="about-section py-5 px-4 px-md-5">
+  <div class="row">
+    <div class="col-md-6 mb-4 mb-md-0 position-relative">
+      <div class="red-line-full d-none d-md-block"></div>
+      <ul class="list-unstyled service-list ms-4 ps-3 position-relative z-2">
+        <li class="mb-5 d-flex align-items-center position-relative dot-line">
+          <span class="red-dot"></span>
+          <i class="bi bi-laptop text-danger me-3 fs-4"></i>
+          <span class="fs-5">Website Development</span>
+        </li>
+        <li class="mb-5 d-flex align-items-center position-relative dot-line">
+          <span class="red-dot"></span>
+          <i class="bi bi-phone text-danger me-3 fs-4"></i>
+          <span class="fs-5">App Development</span>
+        </li>
+        <li class="d-flex align-items-center position-relative dot-line">
+          <span class="red-dot"></span>
+          <i class="bi bi-hdd-network text-danger me-3 fs-4"></i>
+          <span class="fs-5">Website Hosting</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6">
+      <h2 class="fw-bold mb-3">About me</h2>
+      <p class="about-text">
+        I’m a passionate software developer who enjoys turning ideas into functional, user-friendly applications.
+        I’m driven by a love for learning, problem-solving, and building scalable web solutions—especially using Ruby on Rails.
+      </p>
+      <div class="d-flex flex-wrap mt-4 gap-4">
+        <div>
+          <h3 class="text-danger">20 +</h3>
+          <p class="mb-0 stats-text">Completed Projects</p>
+        </div>
+        <div>
+          <h3 class="text-danger">95 %</h3>
+          <p class="mb-0 stats-text">Client satisfaction</p>
+        </div>
+        <div>
+          <h3 class="text-danger">2 +</h3>
+          <p class="mb-0 stats-text">Years of experience</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects Section 
+<section class="projects-section bg-dark text-white text-center py-5">
+  <h2 class="fw-bold">Projects</h2>
+</section> -->
+
+<style>
+/* Hero Section */
+.hero-section {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image var(--transition-speed) ease;
+}
+
+/* Dark theme background */
+.hero-section {
+  background-image: url('<%= asset_path("bg-top.jpg") %>');
+}
+
+/* Light theme background */
+[data-theme="light"] .hero-section {
+  background-image: url('<%= asset_path("pexels.jpg") %>');
+}
+
+.hero-left .red-line-hor {
+  height: 3px;
+  width: 60px;
+  background-color: #dc3545;
+}
+
+.hero-right {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 300px;
+}
+
+.hero-bg-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.2), transparent 70%);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+[data-theme="light"] .hero-bg-circle {
+  background: radial-gradient(circle at center, rgba(239, 68, 68, 0.2), transparent 70%);
+}
+
+.hero-image {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  z-index: 3;
+  background-color: var(--primary-color);
+  position: relative;
+}
+
+/* Skills Bar */
+.skills-bar {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background-color: var(--secondary-color);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+/* About Section */
+.about-section {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.about-text {
+  color: var(--text-muted);
+}
+
+.stats-text {
+  color: var(--text-muted);
+}
+
+/* About Section Vertical Line */
+.red-line-full {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2.3rem;
+  width: 2px;
+  background-color: #dc3545;
+  z-index: 1;
+}
+
+.red-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #dc3545;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  left: -1.2rem;
+  top: 0.5rem;
+}
+
+.dot-line {
+  padding-left: 1.5rem;
+}
+
+/* Button overrides for theme compatibility */
+.btn-outline-primary {
+  color: var(--accent-color) !important;
+  border-color: var(--accent-color) !important;
+  background-color: transparent !important;
+}
+
+.btn-outline-primary:hover {
+  color: white !important;
+  background-color: var(--accent-color) !important;
+  border-color: var(--accent-color) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .hero-image {
+    width: 180px;
+    height: 180px;
+  }
+
+  .hero-bg-circle {
+    width: 240px;
+    height: 240px;
+  }
+
+  .skills-bar {
+    justify-content: space-evenly;
+    gap: 1rem;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+  }
+}
+</style>

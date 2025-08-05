@@ -1,0 +1,10 @@
+<h2>Update Resume</h2>
+
+<%= form_with model: @resume, url: resume_path, method: :put, local: true do |form| %>
+  <div class="mb-3">
+    <%= form.label :file, "Upload New Resume (PDF)", class: "form-label" %>
+    <%= form.file_field :file, class: "form-control", accept: "application/pdf" %>
+  </div>
+
+  <%= form.submit "Update Resume", class: "btn btn-success" %>
+<% end %>

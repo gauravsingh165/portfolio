@@ -1,0 +1,62 @@
+<!-- app/views/projects/_form.html.erb -->
+<div class="py-5" style="background: linear-gradient(to right, #f8f9fa, #e0f7fa); min-height: 100vh;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card shadow-lg border-0 rounded-4">
+          <div class="card-body p-5">
+            <h2 class="mb-4 text-center text-primary fw-bold">
+              <%= project.new_record? ? "Add New Project" : "Edit Project" %>
+            </h2>
+
+            <%= form_with(model: project, local: true) do |form| %>
+              <% if project.errors.any? %>
+                <div class="alert alert-danger rounded-3">
+                  <h5><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h5>
+                  <ul class="mb-0">
+                    <% project.errors.each do |error| %>
+                      <li><%= error.full_message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <div class="mb-3">
+                <%= form.label :title, class: "form-label fw-semibold" %>
+                <%= form.text_field :title, class: "form-control", placeholder: "Enter project title" %>
+              </div>
+
+              <div class="mb-3">
+                <%= form.label :description, class: "form-label fw-semibold" %>
+                <%= form.text_area :description, class: "form-control", placeholder: "Describe your project", rows: 4 %>
+              </div>
+
+              <div class="mb-3">
+                <%= form.label :github_url, class: "form-label fw-semibold" %>
+                <%= form.text_field :github_url, class: "form-control", placeholder: "https://github.com/..." %>
+              </div>
+
+              <div class="mb-3">
+                <%= form.label :live_url, class: "form-label fw-semibold" %>
+                <%= form.text_field :live_url, class: "form-control", placeholder: "https://your-project-live.com" %>
+              </div>
+              <div class="mb-3">
+                <%= form.label :project_details, class: "form-label fw-semibold" %>
+                <%= form.text_area :project_details, class: "form-control", placeholder: "Detals about the Project" %>
+              </div>
+
+              <div class="mb-4">
+                <%= form.label :tech_stack, class: "form-label fw-semibold" %>
+                <%= form.text_field :tech_stack, class: "form-control", placeholder: "Ruby, Rails, PostgreSQL, etc." %>
+              </div>
+
+              <div class="text-center">
+                <%= form.submit(project.new_record? ? "Create Project" : "Update Project", class: "btn btn-primary px-5") %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

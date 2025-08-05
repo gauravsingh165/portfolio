@@ -1,0 +1,100 @@
+<div id="pdf-container" class="d-flex flex-column align-items-center gap-5 p-4"></div>
+
+<style>
+  body {
+    background: #f8f9fa;
+  }
+
+  #pdf-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .pdf-page {
+    position: relative;
+    margin-bottom: 30px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .pdf-page:hover {
+    transform: scale(1.01);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  canvas {
+    display: block;
+    border-radius: 16px;
+    width: 100%;
+    height: auto;
+  }
+
+  .textLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    color: transparent;
+    font-family: sans-serif;
+  }
+
+  @media (max-width: 768px) {
+    .pdf-page {
+      width: 90vw !important;
+    }
+  }
+</style>
+
+<script>
+  const url = "<%= url_for(@resume.file) %>";
+  const pdfjsLib = window['pdfjs-dist/build/pdf'];
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  const container = document.getElementById('pdf-container');
+
+  pdfjsLib.getDocument(url).promise.then(function (pdf) {
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+      pdf.getPage(pageNum).then(function (page) {
+        const scale = 1.5;
+        const viewport = page.getViewport({ scale });
+
+        const pageDiv = document.createElement('div');
+        pageDiv.className = 'pdf-page';
+        pageDiv.style.width = viewport.width + 'px';
+        pageDiv.style.height = viewport.height + 'px';
+
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        pageDiv.appendChild(canvas);
+        container.appendChild(pageDiv);
+
+        const renderContext = {
+          canvasContext: context,
+          viewport: viewport
+        };
+        page.render(renderContext);
+
+        page.getTextContent().then(function (textContent) {
+          const textLayerDiv = document.createElement('div');
+          textLayerDiv.className = 'textLayer';
+          pageDiv.appendChild(textLayerDiv);
+
+          pdfjsLib.renderTextLayer({
+            textContent: textContent,
+            container: textLayerDiv,
+            viewport: viewport,
+            textDivs: []
+          });
+        });
+      });
+    }
+  });
+</script>

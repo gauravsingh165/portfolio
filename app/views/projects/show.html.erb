@@ -1,0 +1,74 @@
+<!-- Include AOS (Animate on Scroll) CSS & JS -->
+<%= stylesheet_link_tag 'https://unpkg.com/aos@next/dist/aos.css', media: 'all', 'data-turbo-track': 'reload' %>
+<%= javascript_include_tag 'https://unpkg.com/aos@next/dist/aos.js', 'data-turbo-track': 'reload' %>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    AOS.init();
+  });
+</script>
+
+<div class="container my-5">
+
+  <% if notice %>
+    <div class="alert alert-success text-center" data-aos="fade-down">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <!-- Project Card -->
+  <div class="card shadow-lg border-0" data-aos="fade-up">
+    <div class="card-body">
+      <!-- Title -->
+      <h1 class="card-title text-primary display-5 mb-3">
+        <%= @project.title %>
+      </h1>
+
+      <!-- Description -->
+      <p class="card-text fs-5 text-muted mb-4">
+        <%= @project.description %>
+      </p>
+
+      <!-- Tech Stack -->
+      <% if @project.tech_stack.present? %>
+        <h5 class="text-dark">Tech Stack:</h5>
+        <div class="mb-4">
+          <% @project.tech_stack.split(',').each do |tech| %>
+            <span class="badge bg-secondary me-2 mb-2"><%= tech.strip %></span>
+          <% end %>
+        </div>
+      <% end %>
+
+      <!-- Project Details -->
+      <% if @project.project_details.present? %>
+        <h5 class="text-dark">Project Highlights:</h5>
+        <ul class="fs-6">
+          <% @project.project_details.split("◦").each do |point| %>
+            <% cleaned_point = point.strip %>
+            <% if cleaned_point.present? %>
+              <li><%= cleaned_point %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <!-- Links -->
+      <div class="mt-4">
+        <% if @project.github_url.present? %>
+          <%= link_to "🔗 View Code", @project.github_url, target: "_blank", class: "btn btn-outline-dark me-2 mb-2" %>
+        <% end %>
+
+        <% if @project.live_url.present? %>
+          <%= link_to "🚀 Live Demo", @project.live_url, target: "_blank", class: "btn btn-outline-success mb-2" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="d-flex justify-content-between mt-4" data-aos="fade-up" data-aos-delay="100">
+    <%= link_to "🔙 Back to Projects", projects_path, class: "btn btn-outline-secondary" %>
+    <!--<%= link_to "✏️ Edit Project", edit_project_path(@project), class: "btn btn-outline-primary" %>
+    <%= button_to "🗑️ Delete Project", @project, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>-->
+  </div>
+
+</div>

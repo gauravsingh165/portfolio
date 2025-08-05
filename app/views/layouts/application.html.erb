@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html data-theme="dark">
+  <head>
+    <title>Portfolio</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "projects", "data-turbo-track": "reload" %>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <%= render 'layouts/navbar' %>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <%= yield %>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
+    <!-- Simple Theme System -->
+    <script>
+      // Simple and reliable theme system
+      (function() {
+        'use strict';
+        
+        // Theme configurations
+        const themes = {
+          light: {
+            '--primary-color': '#ffffff',
+            '--secondary-color': '#f8fafc',
+            '--accent-color': '#3b82f6',
+            '--accent-hover': '#2563eb',
+            '--text-color': '#1e293b',
+            '--text-muted': '#64748b',
+            '--text-light': '#475569',
+            '--glass-bg': 'rgba(255, 255, 255, 0.8)',
+            '--glass-border': 'rgba(148, 163, 184, 0.2)',
+            '--nav-bg': 'rgba(248, 250, 252, 0.8)',
+            '--card-bg': 'rgba(255, 255, 255, 0.9)',
+            '--input-bg': 'rgba(255, 255, 255, 0.9)',
+            '--border-color': 'rgba(148, 163, 184, 0.3)',
+            '--shadow-sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+            '--shadow-md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+            '--shadow-lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+            '--shadow-xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+          },
+          dark: {
+            '--primary-color': '#0f172a',
+            '--secondary-color': '#1e293b',
+            '--accent-color': '#3b82f6',
+            '--accent-hover': '#60a5fa',
+            '--text-color': '#f8fafc',
+            '--text-muted': '#94a3b8',
+            '--text-light': '#e2e8f0',
+            '--glass-bg': 'rgba(15, 23, 42, 0.8)',
+            '--glass-border': 'rgba(148, 163, 184, 0.1)',
+            '--nav-bg': 'rgba(30, 41, 59, 0.8)',
+            '--card-bg': 'rgba(30, 41, 59, 0.6)',
+            '--input-bg': 'rgba(15, 23, 42, 0.8)',
+            '--border-color': 'rgba(148, 163, 184, 0.2)',
+            '--shadow-sm': '0 1px 2px 0 rgba(0, 0, 0, 0.3)',
+            '--shadow-md': '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
+            '--shadow-lg': '0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2)',
+            '--shadow-xl': '0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2)'
+          }
+        };
+
+        // Get current theme from localStorage or default to dark
+        function getCurrentTheme() {
+          return localStorage.getItem('theme') || 'dark';
+        }
+
+        // Set theme function
+        function setTheme(theme) {
+          console.log('Setting theme to:', theme); // Debug log
+          
+          const themeColors = themes[theme];
+          if (!themeColors) {
+            console.error('Theme not found:', theme);
+            return;
+          }
+
+          // Apply theme colors to document root
+          Object.entries(themeColors).forEach(([property, value]) => {
+            document.documentElement.style.setProperty(property, value);
+          });
+
+          // Set data attribute
+          document.documentElement.setAttribute('data-theme', theme);
+          
+          // Save to localStorage
+          localStorage.setItem('theme', theme);
+          
+          // Update theme toggle buttons
+          updateThemeToggles(theme);
+          
+          console.log('Theme applied successfully'); // Debug log
+        }
+
+        // Update theme toggle button appearance
+        function updateThemeToggles(theme) {
+          const themeToggles = document.querySelectorAll('.theme-toggle');
+          themeToggles.forEach(toggle => {
+            const sunIcon = toggle.querySelector('.sun-icon');
+            const moonIcon = toggle.querySelector('.moon-icon');
+            
+            if (sunIcon && moonIcon) {
+              if (theme === 'light') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+              } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+              }
+            }
+          });
+        }
+
+        // Toggle theme function
+        function toggleTheme() {
+          const currentTheme = getCurrentTheme();
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+          console.log('Toggling theme from', currentTheme, 'to', newTheme); // Debug log
+          setTheme(newTheme);
+        }
+
+        // Initialize theme system
+        function initTheme() {
+          console.log('Initializing theme system...'); // Debug log
+          const savedTheme = getCurrentTheme();
+          setTheme(savedTheme);
+          
+          // Add click event listeners to theme toggle buttons
+          document.addEventListener('click', function(e) {
+            if (e.target.closest('.theme-toggle')) {
+              e.preventDefault();
+              console.log('Theme toggle clicked!'); // Debug log
+              toggleTheme();
+            }
+          });
+          
+          console.log('Theme system initialized'); // Debug log
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTheme);
+        } else {
+          initTheme();
+        }
+
+        // Make functions globally available for debugging
+        window.themeSystem = {
+          setTheme: setTheme,
+          toggleTheme: toggleTheme,
+          getCurrentTheme: getCurrentTheme
+        };
+        
+      })();
+    </script>
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        AOS.init({
+          duration: 1000,
+          once: true
+        });
+      });
+    </script>
+  </body>
+</html>

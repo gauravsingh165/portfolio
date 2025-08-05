@@ -1,0 +1,252 @@
+<header class="site-header" style="margin-top:-1%">
+  <div class="header-container">
+    <a href="/" class="brand-logo">
+      <span class="logo-text">Gaurav Singh</span>
+      <span class="logo-subtitle">Developer</span>
+    </a>
+    
+    <nav class="main-nav" role="navigation">
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="/" class="nav-link">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-text">Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/about" class="nav-link">
+            <span class="nav-icon">👤</span>
+            <span class="nav-text">About</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/projects" class="nav-link">
+            <span class="nav-icon">💼</span>
+            <span class="nav-text">Projects</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/contact" class="nav-link">
+            <span class="nav-icon">📧</span>
+            <span class="nav-text">Contact</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
+    <div class="header-actions">
+      <button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="theme-icon moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      
+      <button class="menu-toggle" aria-label="Toggle navigation menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.querySelector('.menu-toggle');
+  const mainNav = document.querySelector('.main-nav');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const header = document.querySelector('.site-header');
+  const brandLogo = document.querySelector('.brand-logo');
+
+  // Enhanced mobile menu toggle with animations
+  menuToggle.addEventListener('click', () => {
+    mainNav.classList.toggle('open');
+    menuToggle.classList.toggle('open');
+    document.body.classList.toggle('menu-open');
+    
+    // Add ripple effect to menu toggle
+    createRippleEffect(menuToggle);
+  });
+
+  // Enhanced link click handling with animations
+  navLinks.forEach((link, index) => {
+    link.addEventListener('click', (e) => {
+      // Add click animation
+      link.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        link.style.transform = '';
+      }, 150);
+
+      // Create ripple effect
+      createRippleEffect(link);
+
+      // Close mobile menu with delay for animation
+      setTimeout(() => {
+        mainNav.classList.remove('open');
+        menuToggle.classList.remove('open');
+        document.body.classList.remove('menu-open');
+      }, 300);
+    });
+
+    // Add hover sound effect (optional)
+    link.addEventListener('mouseenter', () => {
+      link.style.transform = 'translateY(-2px) scale(1.02)';
+    });
+
+    link.addEventListener('mouseleave', () => {
+      link.style.transform = '';
+    });
+  });
+
+  // Enhanced outside click detection
+  document.addEventListener('click', (e) => {
+    if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+      mainNav.classList.remove('open');
+      menuToggle.classList.remove('open');
+      document.body.classList.remove('menu-open');
+    }
+  });
+
+  // Enhanced active state detection with smooth transitions
+  const currentPath = window.location.pathname;
+  navLinks.forEach((link, index) => {
+    if (link.getAttribute('href') === currentPath) {
+      // Add staggered animation for active state
+      setTimeout(() => {
+        link.classList.add('active');
+      }, index * 100);
+    }
+  });
+
+  // Scroll-based navbar effects
+  let lastScrollTop = 0;
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Hide/show navbar on scroll
+    if (scrollTop > lastScrollTop && scrollTop > 100) {
+      header.style.transform = 'translateY(-100%)';
+    } else {
+      header.style.transform = 'translateY(0)';
+    }
+    
+    // Add blur effect on scroll
+    if (scrollTop > 50) {
+      header.style.backdropFilter = 'blur(25px)';
+      header.style.background = 'rgba(15, 23, 42, 0.9)';
+    } else {
+      header.style.backdropFilter = 'blur(20px)';
+      header.style.background = 'rgba(15, 23, 42, 0.8)';
+    }
+    
+    lastScrollTop = scrollTop;
+  });
+
+  // Enhanced brand logo interactions
+  brandLogo.addEventListener('mouseenter', () => {
+    brandLogo.style.transform = 'scale(1.05)';
+  });
+
+  brandLogo.addEventListener('mouseleave', () => {
+    brandLogo.style.transform = '';
+  });
+
+  // Create ripple effect function
+  function createRippleEffect(element) {
+    const ripple = document.createElement('span');
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    ripple.style.cssText = `
+      position: absolute;
+      width: ${size}px;
+      height: ${size}px;
+      left: ${x}px;
+      top: ${y}px;
+      background: rgba(59, 130, 246, 0.3);
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      pointer-events: none;
+    `;
+    
+    element.style.position = 'relative';
+    element.appendChild(ripple);
+    
+    setTimeout(() => {
+      ripple.remove();
+    }, 600);
+  }
+
+  // Add ripple animation to CSS
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Continuous floating animation for nav items
+  navLinks.forEach((link, index) => {
+    setInterval(() => {
+      if (!link.classList.contains('active')) {
+        link.style.transform = `translateY(${Math.sin(Date.now() * 0.001 + index) * 2}px)`;
+      }
+    }, 50);
+  });
+
+  // Enhanced theme toggle with sound effect simulation
+  const themeToggle = document.querySelector('.theme-toggle');
+  themeToggle.addEventListener('click', () => {
+    // Add click animation
+    themeToggle.style.transform = 'scale(0.9) rotate(180deg)';
+    setTimeout(() => {
+      themeToggle.style.transform = '';
+    }, 300);
+  });
+
+  // Add parallax effect to header background
+  window.addEventListener('mousemove', (e) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    
+    const x = (clientX / innerWidth - 0.5) * 20;
+    const y = (clientY / innerHeight - 0.5) * 20;
+    
+    header.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  });
+
+  // Add typing effect to brand logo (optional)
+  const logoText = document.querySelector('.logo-text');
+  const originalText = logoText.textContent;
+  let typingIndex = 0;
+  
+  function typeWriter() {
+    if (typingIndex < originalText.length) {
+      logoText.textContent = originalText.substring(0, typingIndex + 1);
+      typingIndex++;
+      setTimeout(typeWriter, 100);
+    }
+  }
+  
+  // Uncomment to enable typing effect on page load
+  // setTimeout(typeWriter, 1000);
+});
+</script>

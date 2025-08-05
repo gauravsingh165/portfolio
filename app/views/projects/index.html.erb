@@ -1,0 +1,135 @@
+<div class="projects-page mt-5">
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="particles"></div>
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Header Section -->
+    <div class="header-section text-center mb-5" data-aos="fade-down">
+      <div class="title-container">
+        <h1 class="main-title">
+          <span class="title-icon">🚀</span>
+          <span class="title-text">My Projects</span>
+        </h1>
+        <p class="subtitle">Exploring the intersection of creativity and technology</p>
+      </div>
+      
+      <div class="header-actions" data-aos="fade-up" data-aos-delay="200">
+        <%= link_to new_project_path, class: "add-project-btn" do %>
+          <i class="bi bi-plus-circle"></i>
+          <span>Add New Project</span>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Alert Messages -->
+    <% if notice %>
+      <div class="alert-container" data-aos="fade-down">
+        <div class="alert alert-success">
+          <i class="bi bi-check-circle"></i>
+          <%= notice %>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Filter Section -->
+    <div class="filter-section mb-5" data-aos="fade-up" data-aos-delay="300">
+      <div class="filter-container">
+        <div class="filter-label">
+          <i class="bi bi-funnel"></i>
+          <span>Filter by Technology</span>
+        </div>
+        <div class="filter-controls">
+          <select id="tech-filter" class="modern-select">
+            <option value="">All Technologies</option>
+            <% @projects.flat_map { |p| p.tech_stack.to_s.split(',') }.map(&:strip).uniq.each do |tech| %>
+              <option value="<%= tech %>"><%= tech %></option>
+            <% end %>
+          </select>
+          <button id="clear-filter" class="clear-filter-btn">
+            <i class="bi bi-x-circle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="projects-grid" id="projects">
+      <% @projects.each_with_index do |project, index| %>
+        <div class="project-item" data-tech="<%= project.tech_stack %>" data-aos="fade-up" data-aos-delay="<%= index * 100 %>">
+          <div class="project-card">
+            <div class="card-header">
+              <div class="project-icon">
+                <i class="bi bi-folder-fill"></i>
+              </div>
+              <div class="project-status">
+                <span class="status-badge">Active</span>
+              </div>
+            </div>
+            
+            <div class="card-body">
+              <h3 class="project-title"><%= project.title %></h3>
+              <p class="project-description">
+                <%= truncate(project.description, length: 120) %>
+              </p>
+              
+              <div class="project-links">
+                <% if project.github_url.present? %>
+                  <a href="<%= project.github_url %>" target="_blank" class="project-link-item">
+                    <i class="bi bi-github"></i>
+                    <span>GitHub</span>
+                  </a>
+                <% end %>
+                
+                <% if project.live_url.present? %>
+                  <a href="<%= project.live_url %>" target="_blank" class="project-link-item">
+                    <i class="bi bi-box-arrow-up-right"></i>
+                    <span>Live Demo</span>
+                  </a>
+                <% end %>
+              </div>
+            </div>
+            
+            <div class="card-footer">
+              <div class="tech-stack">
+                <% if project.tech_stack.present? %>
+                  <% project.tech_stack.split(",").map(&:strip).each do |tech| %>
+                    <span class="tech-tag" data-bs-toggle="tooltip" title="<%= tech %>">
+                      <%= tech %>
+                    </span>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+            
+            <%= link_to project_path(project), class: "project-view-btn" do %>
+              <span>View Details</span>
+              <i class="bi bi-arrow-right"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="empty-state" style="display: none;">
+      <div class="empty-icon">
+        <i class="bi bi-search"></i>
+      </div>
+      <h3>No projects found</h3>
+      <p>Try adjusting your filter criteria</p>
+    </div>
+  </div>
+</div>
+
+<!-- External Resources -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
