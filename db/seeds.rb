@@ -8,6 +8,11 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # db/seeds.rb
+
+puts "---- Clearing old projects ----"
+Project.delete_all
+
+puts "---- Creating projects ----"
 Project.create!(
   title: "Study Abroad Portal",
   description: "Full-stack web app for global university discovery with admission prediction and lead management features.",
