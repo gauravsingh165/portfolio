@@ -1,4 +1,4 @@
-<section class="hero-section d-flex flex-column flex-md-row align-items-center justify-content-between px-5 py-5">
+<section class="hero-section d-flex flex-column flex-md-row align-items-center justify-content-between px-5 py-5" data-aos="fade-up">
   <div class="hero-left mb-5 mt-5 mb-md-0">
     <h1 class="fw-light">Hello <span class="text-danger">.</span></h1>
 
@@ -7,35 +7,42 @@
       <h1 class="fw-bold display-5 mb-0">I'm Gaurav</h1>
     </div>
 
-    <h2 class="fw-bold fs-2">Software Developer</h2>
+    <!-- Typing animation role -->
+    <h2 class="fw-bold fs-2 dynamic-role"></h2>
 
-<div class="mt-4 d-flex gap-3 flex-wrap">
-  <a href="#" class="btn btn-danger">Got a project?</a>
-  <%= link_to "My resume", resume_path(1), class: "btn btn-outline-primary" %>
-</div>
+    <div class="mt-4 d-flex gap-3 flex-wrap">
+      <a href="#" class="btn btn-danger">Got a project?</a>
+      <%= link_to "My resume", resume_path(Resume.last.id), class: "btn btn-outline-primary" %>
+    </div>
 
+    <!-- Social links -->
+    <div class="social-links mt-4">
+      <a href="https://github.com/gauravsingh165" target="_blank" class="text-light fs-4 me-3"><i class="bi bi-github"></i></a>
+      <a href="https://www.linkedin.com/in/gaurav091/" target="_blank" class="text-light fs-4 me-3"><i class="bi bi-linkedin"></i></a>
+      <a href="https://www.instagram.com/rajput_gaurav165" target="_blank" class="text-light fs-4"><i class="bi bi-instagram"></i></a>
+    </div>
   </div>
 
-  <div class="hero-right position-relative text-center">
+  <div class="hero-right position-relative text-center" data-aos="zoom-in">
     <div class="hero-bg-circle"></div>
     <%= image_tag "my_image.jpeg", alt: "Gaurav", class: "hero-image" %>
   </div>
 </section>
 
 <!-- Skills Bar -->
-<div class="skills-bar fs-6 border-top border-secondary border-opacity-25">
-  <span>HTML5</span>
-  <span>CSS</span>
+<div class="skills-bar fs-6 border-top border-secondary border-opacity-25" data-aos="fade-up" data-aos-delay="200" style="background-color: #020127;">
+  <span>BOOTSTRAP</span>
   <span>JavaScript</span>
   <span>Ruby</span>
   <span>Ruby On Rails</span>
-  <span>Git</span>
+  <span>GIT</span>
+  <span>LINUX</span>
   <span>PostgreSQL</span>
   <span>Docker</span>
 </div>
 
 <!-- About Section -->
-<section class="about-section py-5 px-4 px-md-5">
+<section class="about-section py-5 px-4 px-md-5" data-aos="fade-up" data-aos-delay="300">
   <div class="row">
     <div class="col-md-6 mb-4 mb-md-0 position-relative">
       <div class="red-line-full d-none d-md-block"></div>
@@ -82,12 +89,70 @@
   </div>
 </section>
 
-<!-- Projects Section 
-<section class="projects-section bg-dark text-white text-center py-5">
-  <h2 class="fw-bold">Projects</h2>
-</section> -->
+<!-- AOS Library -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+
+  // Typing animation with fixed height to prevent screen squeeze
+  const roles = ["Software Developer", "Backend Engineer", "Full Stack Developer", "Tech Enthusiast"];
+  let index = 0;
+  let charIndex = 0;
+  const roleElement = document.querySelector(".dynamic-role");
+
+  // Reserve space based on longest role
+  const longest = roles.reduce((a, b) => a.length > b.length ? a : b, "");
+  roleElement.style.minWidth = longest.length + "ch"; // Reserve width
+  roleElement.style.display = "inline-block";
+
+  function type() {
+    if (charIndex < roles[index].length) {
+      roleElement.textContent = roles[index].substring(0, charIndex + 1);
+      charIndex++;
+      setTimeout(type, 100);
+    } else {
+      setTimeout(erase, 2000);
+    }
+  }
+
+  function erase() {
+    if (charIndex > 0) {
+      roleElement.textContent = roles[index].substring(0, charIndex - 1);
+      charIndex--;
+      setTimeout(erase, 50);
+    } else {
+      index = (index + 1) % roles.length;
+      setTimeout(type, 300);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", type);
+</script>
 
 <style>
+@keyframes float {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+  50% { transform: translate(-50%, -50%) translateY(-15px); }
+}
+.hero-bg-circle {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Prevent screen squeeze during typing animation */
+.dynamic-role {
+  min-height: 1.5em; /* Keeps height stable */
+}
+
+/* Social links styling */
+.social-links a {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.social-links a:hover {
+  transform: scale(1.2);
+  color: #dc3545 !important;
+}
+
 /* Hero Section */
 .hero-section {
   background-color: var(--primary-color);

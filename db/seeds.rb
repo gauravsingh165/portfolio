@@ -31,7 +31,7 @@ Project.create!(
 Project.create!(
   title: "Spina Sell",
   description: "Responsive e-commerce real estate platform with custom OAuth2 login and WebSockets-based real-time UX.",
-  tech_stack: "Java Servlets, JSP, JDBC, Ruby on Rails, JavaScript, jQuery, Turbo, Bootstrap, WebSockets, Docker, Nginx, EC2",
+  tech_stack: "Ruby on Rails, JavaScript, Pundit, Geolocation, JavaScript, jQuery, Bootstrap, Docker, Nginx, EC2",
   project_details: <<~DETAILS
     ◦ Developed a responsive e-commerce real estate platform using core Java Servlets, JSP, and JDBC with 20+ dynamic property views.
     ◦ Implemented custom OAuth2 login flow (Google, Facebook, Apple) using HTTP-based integrations, reaching 500+ users.
